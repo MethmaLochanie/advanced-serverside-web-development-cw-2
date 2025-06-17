@@ -1,3 +1,11 @@
+⚠ Notice
+
+This project is proprietary. No use, reproduction, modification, or distribution of this software or its source code is allowed without explicit written permission from the author, Methma Lochanie Rathnayaka.
+
+If you wish to reference this work or request usage permissions, please contact the author directly.
+
+Unauthorized use will be considered a violation of copyright and may lead to legal action.
+
 # Travel Blog Platform
 
 A full-stack web application for sharing travel experiences, featuring country information integration, user authentication, and social features.
@@ -11,9 +19,7 @@ A full-stack web application for sharing travel experiences, featuring country i
 │   └── src/
 │       ├── api/           # API client and endpoints
 │       ├── components/    # Reusable React components
-│       │   └── admin/     # Administrative interface components
 │       ├── pages/         # Page-level components
-│       ├── hooks/         # Custom React hooks
 │       └── context/       # React context providers
 ├── server/                # Express.js backend server
 │   └── src/
@@ -29,8 +35,7 @@ A full-stack web application for sharing travel experiences, featuring country i
         ├── routes/        # API route definitions
         ├── middleware/    # Custom middleware
         ├── config/        # Configuration files
-        ├── utils/         # Utility functions
-        └── database/      # Database models and migrations
+        └── utils/         # Utility functions
 ```
 
 ## Core Features
@@ -46,7 +51,7 @@ A full-stack web application for sharing travel experiences, featuring country i
   - Image upload capabilities
 
 - **Country Integration**
-  - Real-time country data retrieval
+  - Real-time country data retrieval via microservice
   - Country-specific blog filtering
   - Geographic information display
 
@@ -56,42 +61,44 @@ A full-stack web application for sharing travel experiences, featuring country i
   - Comment system
   - User profiles
 
-- **Administrative Tools**
-  - User management interface
-  - Content moderation
-  - System statistics
-
 ## Technical Stack
 
-- **Frontend**
-  - React.js
-  - Material-UI
-  - React Router
-  - Axios
+### Frontend (Client)
+- React.js 19.1.0
+- Material-UI 7.0.2
+- React Router 7.5.0
+- React Query 5.74.4
+- Axios 1.8.4
+- Date-fns 4.1.0
 
-- **Backend**
-  - Node.js
-  - Express.js
-  - SQLite
-  - JWT Authentication
+### Backend (Server)
+- Node.js
+- Express.js 4.18.3
+- SQLite3 5.1.7
+- JWT Authentication
+- Winston Logger
+- Express Rate Limiter
+- Helmet Security
+- Multer (File Upload)
+- Sanitize HTML
 
-- **Microservice**
-  - Node.js
-  - Express.js
-  - Country API Integration
-  - Redis (for caching)
+### Microservice
+- Node.js
+- Express.js 4.18.2
+- RestCountries API Integration
+- Rate Limiting
+- JWT Authentication
 
 ## Development Setup
 
 1. **Prerequisites**
    - Node.js (v14 or higher)
    - npm (v6 or higher)
-   - Docker (optional)
-   - Redis (optional, for microservice caching)
+   - Docker and Docker Compose (for containerized deployment)
 
 2. **Environment Configuration**
    ```bash
-   # Server
+   # Server (.env)
    PORT=5001
    JWT_SECRET=${JWT_SECRET}
    JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
@@ -99,11 +106,11 @@ A full-stack web application for sharing travel experiences, featuring country i
    JWT_REFRESH_EXPIRES_IN=7d
    DB_PATH=./src/database/database.sqlite
 
-   # Client
+   # Client (.env)
    REACT_APP_API_URL=http://localhost:5001/api
    REACT_APP_MICROSERVICE_URL=http://localhost:5002/api
 
-   # Microservice
+   # Microservice (.env)
    PORT=5002
    JWT_SECRET=${JWT_SECRET}
    COUNTRY_API_URL=https://restcountries.com/v3.1
@@ -111,15 +118,25 @@ A full-stack web application for sharing travel experiences, featuring country i
    API_RATE_WINDOW=900000
    ```
 
-3. **Installation**
+3. **Installation and Running**
+
+   **Option 1: Docker (Recommended)**
    ```bash
-   # Install dependencies for all services
+   # Build and start all services
+   docker-compose up --build
+   ```
+
+   **Option 2: Local Development**
+   ```bash
+   # Install dependencies
    cd server && npm install
    cd ../client && npm install
    cd ../microservice && npm install
 
-   # Start development servers
-   docker-compose up --build
+   # Start services (in separate terminals)
+   cd server && npm run dev
+   cd client && npm start
+   cd microservice && npm run dev
    ```
 
 ## API Documentation
@@ -145,7 +162,7 @@ A full-stack web application for sharing travel experiences, featuring country i
 - `GET /api/followers` - Get followers
 - `GET /api/following` - Get following
 
-### Country Endpoints
+### Country Endpoints (Microservice)
 - `GET /api/countries` - List all countries
 - `GET /api/countries/:code` - Get country by code
 - `GET /api/countries/name/:name` - Search country by name
@@ -162,6 +179,22 @@ A full-stack web application for sharing travel experiences, featuring country i
 - SQL injection prevention
 - API key management (microservice)
 
+## Development Scripts
+
+### Server
+- `npm start` - Start production server
+- `npm run dev` - Start development server with nodemon
+
+### Client
+- `npm start` - Start development server
+- `npm run build` - Build for production
+- `npm test` - Run tests
+- `npm run eject` - Eject from create-react-app
+
+### Microservice
+- `npm start` - Start production server
+- `npm run dev` - Start development server with nodemon
+
 ## Contributing
 
 1. Fork the repository
@@ -172,4 +205,4 @@ A full-stack web application for sharing travel experiences, featuring country i
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+This project is licensed under the proprietary License. 
